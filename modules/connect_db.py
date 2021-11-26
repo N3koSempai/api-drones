@@ -4,7 +4,17 @@ import json
 
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
+# dataset for test
+#test_data = {}
+#test_data["serial"] = 'L0000'
+#test_data["model"] = 'Lightweight'
+#test_data["weigth"] =  500               
+#test_data["battery"] = 100
+#test_data["state"] = 'IDLE'
+#datajs = json.dumps(test_data, indent= 4)
+
 class db_connection():
+
 
     def initial_state(self):
         """create the database if not exist with all data required"""
@@ -14,7 +24,8 @@ class db_connection():
         except FileExistsError:
             pass
         try:
-            open("../db/drones.db", "r")  #test if the database exist
+            f = open("../db/drones.db", "r")  #test if the database exist
+            f.close()
             
         except FileNotFoundError: #database doest'not exist
                 con = sqlite3.connect("../db/drones.db") #create the database
@@ -34,6 +45,7 @@ class db_connection():
         clear_data = json.loads(data) #convert the input json data to dict
         con = sqlite3.connect("../db/drones.db") #connect to database
         curs = con.cursor() #set the cursor
+        
         try: #try to insert the data
             curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (clear_data['serial'],clear_data['model'],clear_data['weigth'],clear_data['battery'],clear_data['state']))
             con.commit()
@@ -42,5 +54,40 @@ class db_connection():
         except: #handle error to insert data inside the database
             con.close()
             return False
+    
+    def get_data(self, data):
+        clear_data = json.loads(data) #convert the input json data to dict
+        con = sqlite3.connect("../db/drones.db") #connect to database
+        curs = con.cursor() #set the cursor
+        try:
+            print("in try")
+            curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (clear_data['serial'],))
+            data = curs.fetchall()
+            con.close()
+            print(data)
+            return True
+        except:
+            con.close()
+            return False
 
 
+    def delete(self, data):
+        clear_data = json.loads(data) #convert the input json data to dict
+        con = sqlite3.connect("../db/drones.db") #connect to database
+        curs = con.cursor() #set the cursor
+        try:
+            curs.execute("DELETE FROM DRONE WHERE serial_number =(?)", (clear_data['serial'],))
+            con.commit()
+            con.close()
+            return True
+        except:
+            con.close()
+            return False
+
+
+
+#inst = db_connection()
+#inst.initial_state()
+#inst.insert_drone(datajs)
+#print(inst.get_data(datajs))
+#print(inst.delete(datajs))   #only for test
