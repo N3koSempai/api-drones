@@ -1,7 +1,9 @@
+from falcon import status_codes
 from modules import battery, connect_db
 import json
-import unittest
-
+import unittest , os
+import requests, asyncio
+import server_start
 
 
 
@@ -38,7 +40,19 @@ class TestClass(unittest.TestCase):
     #def test_delete_drone(self): #not compatible for now with test_insert_drone
     #    self.assertTrue(self.database.delete(self.datajs))
 
+    
 
-    def 
+    async def test_get_api_server_http(self):
+        os.chdir(os.path.dirname(os.path.realpath(__file__)))
+        task1 = os.system("hug -f server_start.py")
+        url = "127.0.0.1:8000"
+        response = requests.get(url)
+        print(response.status_codes)
+        task2 = self.assertIs("200", response.status_code)
+        await task1
+        asyncio.sleep(1)
+        await task2
+
+
 if __name__ == "__main__":
     unittest.main()
