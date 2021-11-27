@@ -28,7 +28,7 @@ class TestClass(unittest.TestCase):
 
     def test_insert(self): # for this test delete the db because duplication error with a Unique field inside the db
 
-        #self.database.initial_state() #create the database if not exist for the full test
+        self.database.initial_state() #create the database if not exist for the full test
         self.assertTrue(self.database.insert(self.typedb, self.datadict))
     
     #def test_get_data(self): #is not posible run this test with the test_insert_drone . run the other fist and after this
