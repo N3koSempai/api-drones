@@ -95,7 +95,7 @@ class db_connection():
         if typedata == 'get_drone':
             try:
                 curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (data['serial'],)) #get a specific drone stadistic
-                data = curs.fetchall()
+                data = curs.fetchone()
                 con.close()
                 return data
             except:

@@ -34,7 +34,12 @@ def post(typedata , data):
         res = dbc.insert(typedata,data)
         return res
     elif typedata == 'insert_cargo':
-        res = dbc.insert(typedata,data)
+        res = dbc.get_data(typedata = "get_drone",data = data) #get if that drone have cargo 
+        
+        #add here a system for try if that cargo is already loaded
+        if res[5] == 'None': #is if empty?
+            print(res)
+            res = dbc.insert(typedata,data) #set the serial of new cargo
         return res
     elif typedata == 'test':
         return True
