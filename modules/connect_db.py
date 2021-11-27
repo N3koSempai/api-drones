@@ -40,7 +40,7 @@ class db_connection():
                      cargo VARCHAR(100))
                      """) #the table for drones
                 
-                curs.execute("CREATE TABLE MEDICATION (name VARCHART(30) NOT NULL,weigth INTEGER NOT NULL, code VARCHART(100) UNIQUE NOT NULL, image BLOB)") 
+                curs.execute("CREATE TABLE MEDICATION (name VARCHART(30) NOT NULL,weigth INTEGER NOT NULL, code VARCHART(100) UNIQUE NOT NULL, image BLOB, loaded INTEGER)") 
                 con.close() #close connection
 
 
@@ -60,12 +60,16 @@ class db_connection():
 
         elif typedata == 'insert_medication':
             try:
-                curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img']))
+                curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img'],0))
                 con.commit()
                 con.close()
                 return True
             except:
-                return "se salio"
+                return False
+        elif typedata == 'loaded':
+            curs.execute("UPDATE MEDICATION SET loaded = ? WHERE code = ?", (data['loaded'],data['code']) )
+            con.commit()
+            con.close()
         elif typedata == 'insert_cargo':
             try:
                 print(data)
@@ -104,7 +108,7 @@ class db_connection():
         elif typedata == 'get_medication':
             try:
                 curs.execute("SELECT * FROM MEDICATION WHERE code =(?)", (data['code'],))#get a specific cargo medication
-                data = curs.fetchall()
+                data = curs.fetchone()
                 con.close()
                 return data
             except:
