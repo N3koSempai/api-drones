@@ -50,7 +50,7 @@ class db_connection():
         curs = con.cursor() #set the cursor
         if typedata == 'insert_drone':
             try: #try to insert the data
-                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],"")) #register a new drone
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],'None')) #register a new drone
                 con.commit()
                 con.close()
                 return True
@@ -68,7 +68,7 @@ class db_connection():
                 return False
         elif typedata == 'test':
             try:
-                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],''))
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],'None'))
                 con.close()
                 return True
             except:
@@ -91,7 +91,7 @@ class db_connection():
             except:
                 con.close()
                 return False
-        if typedata == 'get_medication':
+        elif typedata == 'get_medication':
             try:
                 curs.execute("SELECT * FROM MEDICATION WHERE code =(?)", (data['code'],))
                 data = curs.fetchall()
@@ -99,6 +99,17 @@ class db_connection():
                 return data
             except:
                 con.close()
+                return False
+        elif typedata == 'get_available_drone':
+            try:
+                curs.execute("SELECT * FROM DRONE WHERE cargo = 'None'") # get drone without code in cargo
+                data = curs.fetchall()
+                con.close()
+                return data
+            except:
+                con.close()
+                return False
+
 
 
     def delete(self, data):
