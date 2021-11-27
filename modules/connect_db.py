@@ -42,10 +42,10 @@ class db_connection():
                 con.close() #close connection
 
 
-    def insert_drone(self,typedata , data):
+    def insert(self,typedata , data):
+        
         con = sqlite3.connect("../db/drones.db") #connect to database
         curs = con.cursor() #set the cursor
-        print(data)
         if typedata == 'insert_drone':
             try: #try to insert the data
                 curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
@@ -63,6 +63,13 @@ class db_connection():
                 return True
             except:
                 return False
+        elif typedata == 'test':
+            try:
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
+                con.close()
+                return True
+            except:
+                return False 
         
     def get_data(self, data):
         clear_data = json.loads(data) #convert the input json data to dict
