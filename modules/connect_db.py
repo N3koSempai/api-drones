@@ -41,20 +41,29 @@ class db_connection():
                 curs.execute("CREATE TABLE MEDICATION (name VARCHART(30) NOT NULL,weigth INTEGER NOT NULL, code VARCHART(100) UNIQUE NOT NULL, image BLOB)") 
                 con.close() #close connection
 
-    def insert_drone(self, data):
-        clear_data = json.loads(data) #convert the input json data to dict
+
+    def insert_drone(self,typedata , data):
         con = sqlite3.connect("../db/drones.db") #connect to database
         curs = con.cursor() #set the cursor
+        print(data)
+        if typedata == 'insert_drone':
+            try: #try to insert the data
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
+                con.commit()
+                con.close()
+                return True
+            except: #handle error to insert data inside the database
+                con.close()
+                return False
+        elif typedata == 'insert_medication':
+            try:
+                curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img']))
+                con.commit()
+                con.close()
+                return True
+            except:
+                return False
         
-        try: #try to insert the data
-            curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (clear_data['serial'],clear_data['model'],clear_data['weigth'],clear_data['battery'],clear_data['state']))
-            con.commit()
-            con.close()
-            return True
-        except: #handle error to insert data inside the database
-            con.close()
-            return False
-    
     def get_data(self, data):
         clear_data = json.loads(data) #convert the input json data to dict
         con = sqlite3.connect("../db/drones.db") #connect to database
