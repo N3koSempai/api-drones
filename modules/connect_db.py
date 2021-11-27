@@ -36,25 +36,28 @@ class db_connection():
                     model VARCHART(20) NOT NULL,
                     weight_limit INTEGER NOT NULL,
                      battery INTEGER NOT NULL,
-                     state VARCHART(20) NOT NULL)""") #the table for drones
+                     state VARCHART(20) NOT NULL,
+                     cargo VARCHAR(100))
+                     """) #the table for drones
                 
                 curs.execute("CREATE TABLE MEDICATION (name VARCHART(30) NOT NULL,weigth INTEGER NOT NULL, code VARCHART(100) UNIQUE NOT NULL, image BLOB)") 
                 con.close() #close connection
 
 
     def insert(self,typedata , data):
-        
+        """insert drone to the database or insert medication.only change the value of typedata """
         con = sqlite3.connect("../db/drones.db") #connect to database
         curs = con.cursor() #set the cursor
         if typedata == 'insert_drone':
             try: #try to insert the data
-                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],"")) #register a new drone
                 con.commit()
                 con.close()
                 return True
             except: #handle error to insert data inside the database
                 con.close()
                 return False
+
         elif typedata == 'insert_medication':
             try:
                 curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img']))
@@ -65,26 +68,37 @@ class db_connection():
                 return False
         elif typedata == 'test':
             try:
-                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],''))
                 con.close()
                 return True
             except:
-                return False 
-        
-    def get_data(self, data):
-        clear_data = json.loads(data) #convert the input json data to dict
-        con = sqlite3.connect("../db/drones.db") #connect to database
-        curs = con.cursor() #set the cursor
-        try:
-            print("in try")
-            curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (clear_data['serial'],))
-            data = curs.fetchall()
-            con.close()
-            print(data)
-            return True
-        except:
+                return False
+        else:
             con.close()
             return False
+        
+
+    def get_data(self,typedata, data):
+        
+        con = sqlite3.connect("../db/drones.db") #connect to database
+        curs = con.cursor() #set the cursor
+        if typedata == 'get_drone':
+            try:
+                curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (data['serial'],))
+                data = curs.fetchall()
+                con.close()
+                return data
+            except:
+                con.close()
+                return False
+        if typedata == 'get_medication':
+            try:
+                curs.execute("SELECT * FROM MEDICATION WHERE code =(?)", (data['code'],))
+                data = curs.fetchall()
+                con.close()
+                return data
+            except:
+                con.close()
 
 
     def delete(self, data):
