@@ -18,7 +18,9 @@ def get(typedata = hug.types.text, data = hug.types.JSON): #handle the get petit
     elif typedata == 'test':
         return True
 
-        
+    elif typedata == "checking_loading":
+        res = dbc.get_data(typedata, data)
+
 @hug.post(output_format = JSON)
 @hug.http(typedata = hug.types.text, data = hug.types.JSON)
 def post(typedata , data):

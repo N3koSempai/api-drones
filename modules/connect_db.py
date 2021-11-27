@@ -57,7 +57,7 @@ class db_connection():
             except: #handle error to insert data inside the database
                 con.close()
                 return False
-
+        
         elif typedata == 'insert_medication':
             try:
                 curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img']))
@@ -84,7 +84,7 @@ class db_connection():
         curs = con.cursor() #set the cursor
         if typedata == 'get_drone':
             try:
-                curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (data['serial'],))
+                curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (data['serial'],)) #get a specific drone stadistic
                 data = curs.fetchall()
                 con.close()
                 return data
@@ -93,7 +93,7 @@ class db_connection():
                 return False
         elif typedata == 'get_medication':
             try:
-                curs.execute("SELECT * FROM MEDICATION WHERE code =(?)", (data['code'],))
+                curs.execute("SELECT * FROM MEDICATION WHERE code =(?)", (data['code'],))#get a specific cargo medication
                 data = curs.fetchall()
                 con.close()
                 return data
@@ -102,15 +102,23 @@ class db_connection():
                 return False
         elif typedata == 'get_available_drone':
             try:
-                curs.execute("SELECT * FROM DRONE WHERE cargo = 'None'") # get drone without code in cargo
+                curs.execute("SELECT * FROM DRONE WHERE cargo = 'None'") # get drone without code in cargo, (available for loaded)
                 data = curs.fetchall()
                 con.close()
                 return data
             except:
                 con.close()
                 return False
-
-
+        elif typedata == "checking_loading":
+            try:
+                curs.execute("SELECT cargo FROM DRONE WHERE serial = (?)",  (data['serial'],)) # get cargo id from a specific drone
+                data = curs.fetchall()
+                if data != None:
+                    self.get_data(typedata = "get_medication", data = data)
+                con.close()
+            except:
+                con.close()
+                return False
 
     def delete(self, data):
         clear_data = json.loads(data) #convert the input json data to dict
