@@ -57,7 +57,7 @@ class db_connection():
             except: #handle error to insert data inside the database
                 con.close()
                 return False
-        
+
         elif typedata == 'insert_medication':
             try:
                 curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img']))
@@ -65,6 +65,16 @@ class db_connection():
                 con.close()
                 return True
             except:
+                return "se salio"
+        elif typedata == 'insert_cargo':
+            try:
+                print(data)
+                curs.execute("UPDATE DRONE SET cargo = ? WHERE serial_number = ?", (data['code'],data['serial']) ) #search the drone for serial number and change the cargo 
+                con.commit()
+                con.close()
+                return True
+            except:
+                con.close()
                 return False
         elif typedata == 'test':
             try:

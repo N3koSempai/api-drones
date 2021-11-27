@@ -33,7 +33,9 @@ def post(typedata , data):
     elif typedata == 'insert_medication':
         res = dbc.insert(typedata,data)
         return res
-
+    elif typedata == 'insert_cargo':
+        res = dbc.insert(typedata,data)
+        return res
     elif typedata == 'test':
         return True
     return False
