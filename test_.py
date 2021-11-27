@@ -16,6 +16,7 @@ class TestClass(unittest.TestCase):
         self.test_data["weigth"] =  500
         self.test_data["battery"] = 100
         self.test_data["state"] = 'IDLE'
+        self.typedata = 'insert_drone'
         self.datajs = json.dumps(self.test_data, indent= 4)
         self.database = connect_db.db_connection()
         super(TestClass, self).__init__(*args, **kwargs)
@@ -32,7 +33,7 @@ class TestClass(unittest.TestCase):
     def test_insert_drone(self): # for this test delete the db because duplication error with a Unique field inside the db
         
         self.database.initial_state() #create the database if not exist for the full test
-        self.assertTrue(self.database.insert_drone(self.datajs))
+        self.assertTrue(self.database.insert_drone(self.typedata, self.datajs))
     
     #def test_get_data(self): #is not posible run this test with the test_insert_drone . run the other fist and after this
     #   self.assertTrue(self.database.get_data(self.datajs))
