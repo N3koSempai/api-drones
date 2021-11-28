@@ -5,7 +5,11 @@ from hug.types import JSON
 from modules import logics, connect_db
 from hug import output_format
 
+#gobal variable
 count = 0
+accept_model = ['Lightweight', 'Middleweight', 'Cruiserweight', 'Heavyweight']
+
+
 dbc = connect_db.db_connection()
 dbc.initial_state()
 @hug.get()
@@ -19,24 +23,50 @@ def get(typedata = hug.types.text, data = hug.types.JSON): #handle the get petit
     elif typedata == 'checking_battery':
         try:
             res = dbc.get_data(typedata = 'get_drone', data = data)
-            return res[3]
+            return res[3] #return only the battery field
         except:
-            return False
+            return False #exception or drone doest'not exist
     elif typedata == 'test':
         return True
 
     
 
-@hug.post(output_format = JSON)
+@hug.post(output_format = JSON) #handle the post petition
 @hug.http(typedata = hug.types.text, data = hug.types.JSON)
 def post(typedata , data):
     global count
 
     if typedata == 'insert_drone' and count <= 10:
-        count = count + 1
+        
+        if len(data['serial']) > 100 or data['model'] not in accept_model or data['weigth'] > 500: #return false is over 100 char
+            return False 
         res = dbc.insert(typedata,data)
+        count = count + 1
         return res
     elif typedata == 'insert_medication':
+        for i in data['name']: #test format in name for medication.
+            underscore_name = False
+            letters_name = i.isalpha() #is a letter
+            number_name = i.isdigit() #is a digit
+            if i == '-' or i == '_':
+                underscore = True
+            if letters_name == True or number_name == True or underscore_name == True: #if is not invalid continue loops 
+                continue
+            else:
+                return 'bad format in the name of medication' #is invalid format 
+
+        for i in data['code']:
+            underscore_code = False
+            number_code = i.isdigit()
+            uppercase = i.isupper()
+            if i == '_':
+                underscore_code = True
+            if underscore_code == True or number_code == True or uppercase == True:
+                continue
+            else:
+                return 'bad format in the code of medication'
+
+
         res = dbc.insert(typedata,data)
         return res
 
