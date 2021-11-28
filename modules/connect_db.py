@@ -60,14 +60,14 @@ class db_connection():
 
         elif typedata == 'insert_medication':
             try:
-                curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img'],0))
+                curs.execute("INSERT INTO MEDICATION VALUES(?,?,?,?,?)", (data['name'],data['weigth'],data['code'],data['img'],0)) #insert new medication item
                 con.commit()
                 con.close()
                 return True
             except:
                 return False
         elif typedata == 'loaded':
-            curs.execute("UPDATE MEDICATION SET loaded = ? WHERE code = ?", (data['loaded'],data['code']) )
+            curs.execute("UPDATE MEDICATION SET loaded = ? WHERE code = ?", (data['loaded'],data['code']) ) #update the status in medication item
             con.commit()
             con.close()
         elif typedata == 'insert_cargo':
