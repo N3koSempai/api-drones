@@ -14,12 +14,18 @@ def get(typedata = hug.types.text, data = hug.types.JSON): #handle the get petit
     if typedata == 'get_drone' or typedata == 'get_medication' or typedata == 'get_available_drone': #handle petition for a single element
         res = dbc.get_data(typedata, data)
         return res
-    
+    elif typedata == "checking_loading":
+        res = dbc.get_data(typedata, data)
+    elif typedata == 'checking_battery':
+        try:
+            res = dbc.get_data(typedata = 'get_drone', data = data)
+            return res[3]
+        except:
+            return False
     elif typedata == 'test':
         return True
 
-    elif typedata == "checking_loading":
-        res = dbc.get_data(typedata, data)
+    
 
 @hug.post(output_format = JSON)
 @hug.http(typedata = hug.types.text, data = hug.types.JSON)
