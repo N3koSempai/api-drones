@@ -2,6 +2,7 @@ import hug
 import json
 
 from hug.types import json
+from requests.api import get
 from modules import logics, connect_db
 from hug import output_format
 
@@ -19,41 +20,41 @@ dbc.initial_state()
 #    return "hello"
 
 @hug.get('/drone',output = hug.output_format.json)
-@hug.http()
+@hug.http(accept=('GET'))
 def drone(data: hug.types.json): #handle the get petition
     res = dbc.get_data(typedata = 'get_drone', data = data)
     res = json.dumps(res)
     return res
 
-@hug.get('/test', output = hug.output_format.json)
-@hug.http()
+@hug.get('/server_test',outpout = hug.output_format.json)
+@hug.http(accept=('GET'))
 def server_test():
     return True
 
 @hug.get('/medication',outpout = hug.output_format.json)
-@hug.http()
+@hug.http(accept=('GET'))
 def medication(data: hug.types.json):
     res = dbc.get_data(typedata = 'get_medication', data =data)
     res = json.dumps(res)
     return res
 
 @hug.get('/available_drone',outpout = hug.output_format.json)
-@hug.http()
-def get_available_drone(data: hug.types.json):
+@hug.http(accept=('GET'))
+def available_drone(data: hug.types.json):
     res = dbc.get_data(typedata = 'get_available_drone', data =data)
     res = json.dumps(res)
     return res
 
-@hug.get('/checking_loading',outpout = hug.output_format.json)
-@hug.http()
+@hug.get('/cheking_loading',outpout = hug.output_format.json)
+@hug.http(accept=('GET'))
 def cheking_loading(data: hug.types.json):
     res = dbc.get_data(typedata = 'checking_loading', data =data)
     res = json.dumps(res)
     return res
 
 @hug.get('/checking_battery',outpout = hug.output_format.json)
-@hug.http()
-def cheking_battery(data: hug.types.json):
+@hug.http(accept=('GET'))
+def checking_battery(data: hug.types.json):
     res = dbc.get_data(typedata = 'checking_battery', data =data)
     res = json.dumps(res)
     return res
@@ -61,7 +62,7 @@ def cheking_battery(data: hug.types.json):
 
 #post method
 @hug.post('/insert_drone',output = hug.output_format.json) #handle the post petition
-@hug.http()
+@hug.http(accept=('POST'))
 def insert_drone(data: hug.types.json):
     global count
     if len(data['serial']) > 100 or data['model'] not in accept_model or data['weigth'] > 500: #return false is over 100 char
@@ -72,7 +73,7 @@ def insert_drone(data: hug.types.json):
     return res
 
 @hug.post('/insert_medication',output = hug.output_format.json)
-@hug.http()
+@hug.http(accept=('POST'))
 def insert_medication(data: hug.types.json):
     for i in data['name']: #test format in name for medication.
         underscore_name = False
@@ -103,7 +104,7 @@ def insert_medication(data: hug.types.json):
     return res
 
 @hug.put('/insert_cargo', outpot = hug.output_format.json)
-@hug.http()
+@hug.http(accept=('PUT'))
 def insert_cargo(data: hug.types.json):
     res = dbc.get_data(typedata = "get_drone",data = data) #get if that drone have cargo 
     loaded = dbc.get_data(typedata = 'get_medication', data = data)# try if that cargo is already loaded
