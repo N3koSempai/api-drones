@@ -5,23 +5,21 @@ import json
 import falcon
 import threading
 from modules import connect_db
-
+import asyncio
 import os
 
 #gobal variable
 count = 0
-
+fields = ['serial','model','weigth','battery','state','with cargo?']
 accept_model = {'Lightweight': 100, 'Middleweight': 200, 'Cruiserweight': 300, 'Heavyweight' :500}
 keys_model = accept_model.keys()
+
 
 
 dbc = connect_db.db_connection()
 dbc.initial_state()
 
-#@hug.get('/')
-#@hug.http()
-#def hello():
-#    return "hello"
+
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 
 
@@ -31,14 +29,14 @@ class Drone(object):
     """
 
 
-    @asyncio.coroutine
+
     @hug.post('/drone',output = hug.output_format.json, input = hug.input_format.json, )
     @hug.http(accept=('POST'))
     def drone(data: hug.types.json): #handle the petition
         res = dbc.get_data(typedata = 'get_drone', data = data)
         if res == None:
             raise falcon.HTTPError(falcon.HTTP_404)
-        
+        res = dict(zip(fields,res))
         return res
 
     @hug.post('/server_test',output = hug.output_format.json, input = hug.input_format.json )
@@ -83,17 +81,19 @@ class Drone(object):
     @hug.post('/insert_drone',output = hug.output_format.json, input = hug.input_format.json) #handle the post petition
     @hug.http(accept=('POST'))
     def insert_drone(data: hug.types.json):
-        global count
+        count = dbc.get_data(typedata = 'get_all_drone', data = data)
+        count = len(count)
+        if count + 1 > 10:
+            return 'you have reached the maximun capacity for drones'
         if len(data['serial']) > 100 or data['model'] not in keys_model: #return false is over 100 char
             error_format = "the format of your data is incorrect"
-            return  json.dumps(error_format)
+            return  error_format
         data['battery'] = 100
         data['state'] = 'IDLE'
         temp = data['model'] #get the model name for the input data
         size = accept_model[temp] #search in dict the weigth 
         data['weigth'] = size #set data weigth in the data for registering in db
         res = dbc.insert(typedata = 'insert_drone',data = data) #call to insert the data in db
-        count = count + 1
         if res == None:
             raise falcon.HTTPError(falcon.HTTP_404)
         return res
