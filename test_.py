@@ -36,10 +36,10 @@ class TestClass(unittest.TestCase):
     async def test_get_api_server_http(self):
         os.chdir(os.path.dirname(os.path.realpath(__file__)))
         task1 = os.system("hug -f server_start.py")
-        url = "http://127.0.0.1:8000/post"
+        url = "http://127.0.0.1:8000/server_test"
         await task1
-        asyncio.sleep(1)
-        await self.assertTrue(requests.post(url))
+        asyncio.sleep(10)
+        self.assertTrue(requests.post(url))
 
 
 
