@@ -39,7 +39,7 @@ class db_connection():
                      state VARCHART(20) NOT NULL,
                      cargo VARCHAR(100))
                      """) #the table for drones
-                
+                curs.execute("CREATE TABLE LOGS (id INTEGER PRIMARY KEY AUTOINCREMENT ,serial_number VARCHART(100) NOT NULL, day INTEGER, hours INTEGER, minute INTEGER, battery INTEGER,state VARCHAR(20))") 
                 curs.execute("CREATE TABLE MEDICATION (name VARCHART(30) NOT NULL,weigth INTEGER NOT NULL, code VARCHART(100) UNIQUE NOT NULL, image BLOB, loaded INTEGER)") 
                 con.close() #close connection
 
@@ -91,7 +91,6 @@ class db_connection():
             con.close()
             return False
         
-
     def get_data(self,typedata, data):
         
         con = sqlite3.connect("../db/drones.db") #connect to database
@@ -135,11 +134,10 @@ class db_connection():
                 return False
 
     def delete(self, data):
-        clear_data = json.loads(data) #convert the input json data to dict
         con = sqlite3.connect("../db/drones.db") #connect to database
         curs = con.cursor() #set the cursor
         try:
-            curs.execute("DELETE FROM DRONE WHERE serial_number =(?)", (clear_data['serial'],))
+            curs.execute("DELETE FROM DRONE WHERE serial_number =(?)", (data['serial'],))
             con.commit()
             con.close()
             return True
@@ -147,8 +145,30 @@ class db_connection():
             con.close()
             return False
 
-
-
+    #LOGS TABLE
+    def get_logs(self, data):
+        con = sqlite3.connect("../db/drones.db") #connect to database
+        curs = con.cursor() #set the cursor
+        try:
+            curs.execute("SELECT * FROM LOGS WHERE id = (SELECT MAX(id) FROM LOGS WHERE serial_number = (?))", (data['serial'],))
+            data = curs.fetchall()
+            con.close()
+            return data
+        except:
+            con.close()
+            return False
+    def insert_log(self, data):
+        con = sqlite3.connect("../db/drones.db") #connect to database
+        curs = con.cursor() #set the cursor
+        try: #try to insert the data
+            curs.execute("INSERT INTO LOGS VALUES(NULL,?,?,?,?)", (data[1],data[2],data[3],data[4])) #register a new drone
+            con.commit()
+            con.close()
+            return True
+        except: #handle error to insert data inside the database
+            con.close()
+            return False
+    
 #inst = db_connection()
 #inst.initial_state()
 #inst.insert_drone(datajs)
