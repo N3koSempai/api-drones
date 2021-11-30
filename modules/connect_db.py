@@ -82,7 +82,7 @@ class db_connection():
                 return False
         elif typedata == 'test':
             try:
-                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state'],'None'))
+                curs.execute("INSERT INTO DRONE VALUES(?,?,?,?,?)", (data['serial'],data['model'],data['weigth'],data['battery'],data['state']))
                 con.close()
                 return True
             except:
@@ -99,6 +99,15 @@ class db_connection():
             try:
                 curs.execute("SELECT * FROM DRONE WHERE serial_number =(?)", (data['serial'],)) #get a specific drone stadistic
                 data = curs.fetchone()
+                con.close()
+                return data
+            except:
+                con.close()
+                return False
+        elif typedata == 'get_all_drone':
+            try:
+                curs.execute("SELECT serial_number FROM DRONE") #get a specific drone stadistic
+                data = curs.fetchall()
                 con.close()
                 return data
             except:
