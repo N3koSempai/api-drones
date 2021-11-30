@@ -90,7 +90,7 @@ key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
-{"name": "espirulina23_", "weigth": 20 , "code": "A25FS", "img": 12322354676878}
+{"name": "espirulina23_", "weigth": 20 , "code": "A23FS", "img": 12322354676878}
 ```
 
 ### 5 - get a medication package information
@@ -107,7 +107,7 @@ values field example:
 >note: the standart solution for this requirement is save the img in a folder an save in the db a reference to the position
 
 ### 6 - insert cargo after medication is register for reference
-url = ```"http://127.0.0.1:8000/insert_cargo"``` <br/>
+url = ```http://127.0.0.1:8000/insert_cargo``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
 
