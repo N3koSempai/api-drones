@@ -43,15 +43,16 @@ in the test I use the browser extension Restman
 2- the models in the request need to by exactly one of this and the system asignet automatic weigth. <br/>
 #### problem i had in the development of this api
 
-** due to my little experience with api framework I selected a good library in python for that but this library have very low documentation and is not very
-compatible with concurrency and parallelism functions.
-so then it became impossible for me to implement multithrading or multiprocessing for background tasks.
-this would be easy to solve with flask api framework but no time for refactor all the code.
-the logical I would implement after that would not be complex. example:
+**due to my little experience with api framework I selected a good library in python for that but this library have very low documentation and is not very**
+**compatible with concurrency and parallelism functions.**
+**so then it became impossible for me to implement multithrading or multiprocessing for background tasks.**
+**this would be easy to solve with flask api framework but no time for refactor all the code.**
+**the logical I would implement after that would not be complex.**
+ example:
 1 - a async function get drones state every 2 min and if it is not in IDLE state change to the next state (the drone and medication package is mark loaded when use the isert_cargo function correctly)
 2 - insert a data with time , serial, cargo code and battery level to logs Table every 2 min
 3 -  remove a 15% of battery at each change of state
-4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery **
+4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery
 
 
 
