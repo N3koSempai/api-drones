@@ -53,7 +53,7 @@ in the test I use the browser extension Restman
 2 - insert a data with time , serial, cargo code and battery level to logs Table every 2 min <br/>
 3 -  remove a 15% of battery at each change of state <br/>
 4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery <br/>
-
+>note: the delete petition for drone is not enable because dont have but exist in connect_db. the reason is that it was not required and create concurrence was a higher priority 
 
 
 ```json
@@ -99,7 +99,7 @@ HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
 values field example: 
 ```json
-{ "code": "A25FS"}
+{ "code": "A23FS"}
 ```
 
 **advice: the field img for image is a blob field you need to convert your image to binary before send**
