@@ -1,5 +1,5 @@
 from falcon import status_codes
-from modules import battery, connect_db
+from modules import  connect_db
 import json
 import unittest , os
 import requests, asyncio
