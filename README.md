@@ -63,13 +63,22 @@ values field example:
 ```
 
 ### 4 - insert medication item before asignet
- url = ```http://127.0.0.1:8000/insert_medication``` <br/>
+url = ```http://127.0.0.1:8000/insert_medication``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
 {"name": "espirulina23_", "weigth": 20 , "code": "A25FS", "img": 12322354676878}
+```
+
+### 5 - get a medication package information
+url = ```http://127.0.0.1:8000/medication``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
+values field example: 
+```json
+{ "code": "A25FS"}
 ```
 
 **advice: the field img for image is a blob field you need to convert your image to binary before send**
