@@ -3,7 +3,7 @@ import requests
 if __name__== "__main__":
     url = "http://127.0.0.1:8000/insert_drone" # remember change the url before the petition
     
-    insert_data_medic = {"data": {"name": "espirulina23_", "weigth": 20 , 'code': "A25FS", 'img': 12322354676878}} #medication insert arguments
+    insert_data_medic = {"data": {"name": "espirulina23_", "weigth": 20 , 'code': "A23FS", 'img': 12322354676878}} #medication insert arguments
     insert_cargo = {"data": {'code': "A23FS", "serial": "L30030"}} #for asignet a cargo to a drone. !IMPORTANT! the serial and the cargo has to exist
     databattery = {"data": {'serial': "L30030"}} #get the battery for a specific drone
     insert_drone = {'data': {'serial': 'L30030','model':'Middleweight'}}
