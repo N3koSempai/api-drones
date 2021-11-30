@@ -12,7 +12,7 @@ count = 0
 fields = ['serial','model','weigth','battery','state','with cargo?']
 accept_model = {'Lightweight': 100, 'Middleweight': 200, 'Cruiserweight': 300, 'Heavyweight' :500}
 keys_model = accept_model.keys()
-temp = {'result_of_your_query': 'Null'}
+respond = {'result_of_your_query': 'Null'}
 
 dbc = connect_db.db_connection()
 dbc.initial_state()
@@ -96,8 +96,8 @@ class Drone(object):
         res = dbc.insert(typedata = 'insert_drone',data = data) #call to insert the data in db
         if res == None or res == False:
             raise falcon.HTTPError(falcon.HTTP_404, title = 'the serial is in used for other drone')
-        temp['result_of_your_query'] = res
-        return temp
+        respond['result_of_your_query'] = res
+        return respond
 
     @hug.post('/insert_medication',output = hug.output_format.json, input = hug.input_format.json)
     @hug.http(accept=('POST'))
@@ -126,8 +126,8 @@ class Drone(object):
                 raise falcon.HTTPError(falcon.HTTP_404, title = 'bad format in the code of medication') 
 
         res = dbc.insert(typedata = 'insert_medication',data = data) 
-        temp['result_of_your_query'] = res
-        return temp
+        respond['result_of_your_query'] = res
+        return respond
 
     @hug.post('/insert_cargo', output = hug.output_format.json, input = hug.input_format.json)
     @hug.http(accept=('POST'))
@@ -151,6 +151,7 @@ class Drone(object):
             change_loaded['loaded'] = 1
             change_loaded['code'] = loaded[2]
             dbc.insert(typedata='loaded',data = change_loaded)
-            return res
+            respond['result_of_your_query'] = res
+            return respond
         else:
             raise falcon.HTTPError(falcon.HTTP_404)
