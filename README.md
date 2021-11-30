@@ -1,9 +1,9 @@
 # api-drones
 
 ## set the enviroment
-1 -donwload all file with git clone or zip
-2- move to the donwload directory
-3- install all the necessary library with this command in your commandline
+1 -donwload all file with git clone or zip <br/>
+2- move to the donwload directory <br/>
+3- install all the necessary library with this command in your commandline <br/>
 ```batch
 pip install -r requirements.txt
 ```
@@ -25,12 +25,11 @@ hug -f server_api.py
 Use a advanced client for send POST with json data
 in the test I use the browser extension Restman
 
-**advice: dont send enty post petition with restman,the client have error.**
+**advice: dont send enty post petition with restman,the client have error.** <br/>
 **advice2: I include a client for tests. all posible operation have include in that client**
-1- only open the file [client](https://github.com/N3koSempai/api-drones/blob/main/client.py)
-2- comment the two line ```url = ...``` and ```response = req...```
-
-3- uncomment the petition you want to use and run with python that file
+1- only open the file [client](https://github.com/N3koSempai/api-drones/blob/main/client.py) <br/>
+2- comment the two line ```url = ...``` and ```response = req...``` <br/>
+3- uncomment the petition you want to use and run with python that file <br/>
 
 
 >note: all endpoint use post and only one use get because is >not correctly send data in the body of a get petition.
@@ -81,7 +80,7 @@ values field example:
 
 **advice: the field img for image is a blob field you need to convert your image to binary before send**
 
->note: the standart solution for this requirement is save the img in a >folder an save in the db a reference to the position
+>note: the standart solution for this requirement is save the img in a folder an save in the db a reference to the position
 
 ### 5 - insert cargo after medication is register for reference
 url = ```"http://127.0.0.1:8000/insert_cargo"```
@@ -122,8 +121,6 @@ values field example:
 
 ### 7 - check available drone
 
-url = ```http://127.0.0.1:8000/available_drone```
-
-HTTP method: GET
-
-without data in the body of the request
+url = ```http://127.0.0.1:8000/available_drone``` <br/>
+HTTP method: GET <br/>
+without data in the body of the request <br/>
