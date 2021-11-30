@@ -11,20 +11,11 @@ class TestClass(unittest.TestCase):
     
     def __init__(self, *args, **kwargs):
         self.data = {"data": {"serial": "L0000", "model": "chopter",'weigth':0,'battery': 100,'state': 'IDLE'}}
-        self.datadict = {"serial": "L0000", "model": "chopter",'weigth':0,'battery': 100,'state': 'IDLE'}
+        self.datadict = {"serial": "L0001", "model": "chopter",'weigth':0,'battery': 100,'state': 'IDLE'}
         self.typedb = 'test' #tell a method is a test
         self.typedata = {"typedata": "test"}
         self.database = connect_db.db_connection()
         super(TestClass, self).__init__(*args, **kwargs)
-        
-    def test_battery_level(self):
-        battery_levels = []
-        for i in range(0, 101):
-            battery_levels.append(str(i) + "%")
-            
-        battery_s = battery.battery_status() #instanciate the class in battery module
-        status = battery_s.get_status() #take the actual status of the battery
-        self.assertIn(status, battery_levels)
 
     def test_db(self): # for this test delete the db because duplication error with a Unique field inside the db
 
