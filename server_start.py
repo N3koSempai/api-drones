@@ -52,7 +52,7 @@ class Drone(object):
 
     @hug.get('/available_drone',output = hug.output_format.json)
     @hug.http(accept=('GET'))
-    def available_drone(data: hug.types.json):
+    def available_drone():
         res = dbc.get_data(typedata = 'get_available_drone', data = 0)
         if res == None or res == False:
             raise falcon.HTTPError(falcon.HTTP_404)
