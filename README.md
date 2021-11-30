@@ -48,11 +48,11 @@ in the test I use the browser extension Restman
 **so then it became impossible for me to implement multithrading or multiprocessing for background tasks.**
 **this would be easy to solve with flask api framework but no time for refactor all the code.**
 **the logical I would implement after that would not be complex.**
- example:
-1 - a async function get drones state every 2 min and if it is not in IDLE state change to the next state (the drone and medication package is mark loaded when use the isert_cargo function correctly)
-2 - insert a data with time , serial, cargo code and battery level to logs Table every 2 min
-3 -  remove a 15% of battery at each change of state
-4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery
+ example: <br/>
+1 - a async function get drones state every 2 min and if it is not in IDLE state change to the next state (the drone and medication package is mark loaded when use the isert_cargo function correctly) <br/>
+2 - insert a data with time , serial, cargo code and battery level to logs Table every 2 min <br/>
+3 -  remove a 15% of battery at each change of state <br/>
+4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery <br/>
 
 
 
