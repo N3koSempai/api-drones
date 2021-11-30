@@ -50,7 +50,8 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```json
+values field example: 
+```json
 {'code': "A23FS", "serial": "L30030"} 
 ```
 
@@ -61,7 +62,10 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```{"serial": "L30030"} ```
+values field example: 
+```json
+{"serial": "L30030"} 
+```
 
 ### 4 - insert medication item before asignet
  url = ```http://127.0.0.1:8000/insert_medication```
@@ -70,7 +74,10 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```{"name": "espirulina23_", "weigth": 20 , 'code': "A25FS", 'img': 12322354676878}```
+values field example: 
+```json
+{"name": "espirulina23_", "weigth": 20 , 'code': "A25FS", 'img': 12322354676878}
+```
 
 **advice: the field img for image is a blob field you need to convert your image to binary before send**
 
@@ -83,7 +90,10 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```{'code': "A23FS", "serial": "L30030"}```
+values field example: 
+```json
+{'code': "A23FS", "serial": "L30030"}
+```
 
 
 ### 6 - check battery
@@ -93,7 +103,10 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```{'serial': "L30030"}```
+values field example: 
+```json
+{'serial': "L30030"}
+```
 
 ### 6 - check is load or not
 url = ```http://127.0.0.1:8000/checking_loading```
@@ -102,7 +115,10 @@ HTTP method: POST
 
 key field: ```data```  without quotation marks
 
-values field example: ```{'serial': "L30030"}```
+values field example: 
+```json
+{'serial': "L30030"}
+```
 
 ### 7 - check available drone
 
