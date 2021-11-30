@@ -65,7 +65,7 @@ class db_connection():
                 con.close()
                 return True
             except:
-                return False
+                return 'the code of the medication is already in use or another problem has ocurred'
         elif typedata == 'loaded':
             curs.execute("UPDATE MEDICATION SET loaded = ? WHERE code = ?", (data['loaded'],data['code']) ) #update the status in medication item
             con.commit()
