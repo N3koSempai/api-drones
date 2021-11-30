@@ -52,7 +52,7 @@ key field: ```data```  without quotation marks
 
 values field example: 
 ```json
-{'code': "A23FS", "serial": "L30030"} 
+{"code": "A23FS", "serial": "L30030"} 
 ```
 
 ### 3 - get a drone information
@@ -76,7 +76,7 @@ key field: ```data```  without quotation marks
 
 values field example: 
 ```json
-{"name": "espirulina23_", "weigth": 20 , 'code': "A25FS", 'img': 12322354676878}
+{"name": "espirulina23_", "weigth": 20 , "code": "A25FS", "img": 12322354676878}
 ```
 
 **advice: the field img for image is a blob field you need to convert your image to binary before send**
@@ -92,7 +92,7 @@ key field: ```data```  without quotation marks
 
 values field example: 
 ```json
-{'code': "A23FS", "serial": "L30030"}
+{"code": "A23FS", "serial": "L30030"}
 ```
 
 
@@ -105,7 +105,7 @@ key field: ```data```  without quotation marks
 
 values field example: 
 ```json
-{'serial': "L30030"}
+{"serial": "L30030"}
 ```
 
 ### 6 - check is load or not
@@ -117,7 +117,7 @@ key field: ```data```  without quotation marks
 
 values field example: 
 ```json
-{'serial': "L30030"}
+{"serial": "L30030"}
 ```
 
 ### 7 - check available drone
