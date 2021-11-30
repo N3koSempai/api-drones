@@ -37,7 +37,27 @@ in the test I use the browser extension Restman
 ## possible operations,arguments and help page
 
 ### the funtionality of this softwware
-The cargo loaded in the drone is a code reference to the code of the medication package. 
+>(important thing you need know)
+
+1- The cargo loaded in the drone is a code reference to the code of the medication package. <br/>
+2- the models in the request need to by exactly one of this and the system asignet automatic weigth. <br/>
+#### problem i had in the development of this api
+
+** due to my little experience with api framework I selected a good library in python for that but this library have very low documentation and is not very
+compatible with concurrency and parallelism functions.
+so then it became impossible for me to implement multithrading or multiprocessing for background tasks.
+this would be easy to solve with flask api framework but no time for refactor all the code.
+the logical I would implement after that would not be complex. example:
+1 - a async function get drones state every 2 min and if it is not in IDLE state change to the next state (the drone and medication package is mark loaded when use the isert_cargo function correctly)
+2 - insert a data with time , serial, cargo code and battery level to logs Table every 2 min
+3 -  remove a 15% of battery at each change of state
+4 - if drone return to IDLE remove the code in cargo field,and wait 2 minutes to go to 100% the battery **
+
+
+
+```json
+{"Lightweight": 100, "Middleweight": 200, "Cruiserweight": 300, "Heavyweight" :500}
+```
 
 ### 1 - help/documentation page
 make a GET request for ```http://127.0.0.1:8000```
@@ -85,7 +105,7 @@ values field example:
 
 >note: the standart solution for this requirement is save the img in a folder an save in the db a reference to the position
 
-### 5 - insert cargo after medication is register for reference
+### 6 - insert cargo after medication is register for reference
 url = ```"http://127.0.0.1:8000/insert_cargo"``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
@@ -96,7 +116,7 @@ values field example:
 ```
 
 
-### 6 - check battery
+### 7 - check battery
 url = ```http://127.0.0.1:8000/checking_battery``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
@@ -106,7 +126,7 @@ values field example:
 {"serial": "L30030"}
 ```
 
-### 6 - check is load or not
+### 8 - check is load or not
 url = ```http://127.0.0.1:8000/checking_loading``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
@@ -116,7 +136,7 @@ values field example:
 {"serial": "L30030"}
 ```
 
-### 7 - check available drone
+### 9 - check available drone
 
 url = ```http://127.0.0.1:8000/available_drone``` <br/>
 HTTP method: GET <br/>
