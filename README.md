@@ -14,7 +14,7 @@ python -m unittest
 ```
 
 ## run server
-# in the command line use
+ in the command line use:
 ```batch
 hug -f server_api.py
 ```
@@ -43,23 +43,19 @@ The cargo loaded in the drone is a code reference to the code of the medication 
 make a GET request for ```http://127.0.0.1:8000```
 
 ### 2 - Insert a new drone
-url = ```http://127.0.0.1:8000/insert_drone```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+url = ```http://127.0.0.1:8000/insert_drone``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
-{"code": "A23FS", "serial": "L30030"} 
+{"serial": "L30030","model":"Middleweight"}
 ```
 
 ### 3 - get a drone information
-url = ```http://127.0.0.1:8000/drone```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+url = ```http://127.0.0.1:8000/drone``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
@@ -67,11 +63,9 @@ values field example:
 ```
 
 ### 4 - insert medication item before asignet
- url = ```http://127.0.0.1:8000/insert_medication```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+ url = ```http://127.0.0.1:8000/insert_medication``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
@@ -83,11 +77,9 @@ values field example:
 >note: the standart solution for this requirement is save the img in a folder an save in the db a reference to the position
 
 ### 5 - insert cargo after medication is register for reference
-url = ```"http://127.0.0.1:8000/insert_cargo"```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+url = ```"http://127.0.0.1:8000/insert_cargo"``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
@@ -96,11 +88,9 @@ values field example:
 
 
 ### 6 - check battery
-url = ```http://127.0.0.1:8000/checking_battery```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+url = ```http://127.0.0.1:8000/checking_battery``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
@@ -108,11 +98,9 @@ values field example:
 ```
 
 ### 6 - check is load or not
-url = ```http://127.0.0.1:8000/checking_loading```
-
-HTTP method: POST
-
-key field: ```data```  without quotation marks
+url = ```http://127.0.0.1:8000/checking_loading``` <br/>
+HTTP method: POST <br/>
+key field: ```data```  without quotation marks <br/>
 
 values field example: 
 ```json
