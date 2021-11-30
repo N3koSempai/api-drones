@@ -41,6 +41,11 @@ in the test I use the browser extension Restman
 
 1- The cargo loaded in the drone is a code reference to the code of the medication package. <br/>
 2- the models in the request need to by exactly one of this and the system asignet automatic weigth. <br/>
+
+
+```json
+{"Lightweight": 100, "Middleweight": 200, "Cruiserweight": 300, "Heavyweight" :500}
+```
 #### problem i had in the development of this api
 
 **due to my little experience with api framework I selected a good library in python for that but this library have very low documentation and is not very**
@@ -56,9 +61,6 @@ in the test I use the browser extension Restman
 >note: the delete petition for drone is not enable because dont have but exist in connect_db. the reason is that it was not required and create concurrence was a higher priority 
 
 
-```json
-{"Lightweight": 100, "Middleweight": 200, "Cruiserweight": 300, "Heavyweight" :500}
-```
 
 ### 1 - help/documentation page
 make a GET request for ```http://127.0.0.1:8000```
