@@ -22,13 +22,13 @@ hug -f server_api.py
 ## send and receive data from the api server
 ### you have two options here
 
-Use a advanced client for send POST with json data
+1 -Use a advanced client for send POST with json data
 in the test I use the browser extension Restman
 
 **advice: dont send enty post petition with restman,the client have error.** <br/>
-**advice2: I include a client for tests. all posible operation have include in that client**
-1- only open the file [client](https://github.com/N3koSempai/api-drones/blob/main/client.py) <br/>
-2- comment the two line ```url = ...``` and ```response = req...``` <br/>
+**advice2: I include a client for tests. all posible operation have include in that client** <br/>
+1 - only open the file [client](https://github.com/N3koSempai/api-drones/blob/main/client.py) <br/>
+2 - comment the two line ```url = ...``` and ```response = req...``` <br/>
 3- uncomment the petition you want to use and run with python that file <br/>
 
 
