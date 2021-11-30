@@ -12,8 +12,7 @@ count = 0
 fields = ['serial','model','weigth','battery','state','with cargo?']
 accept_model = {'Lightweight': 100, 'Middleweight': 200, 'Cruiserweight': 300, 'Heavyweight' :500}
 keys_model = accept_model.keys()
-
-
+temp = {'result_of_your_query': 'Null'}
 
 dbc = connect_db.db_connection()
 dbc.initial_state()
@@ -80,13 +79,15 @@ class Drone(object):
     @hug.post('/insert_drone',output = hug.output_format.json, input = hug.input_format.json) #handle the post petition
     @hug.http(accept=('POST'))
     def insert_drone(data: hug.types.json):
+        global temp #use the specific dict for errors result
         count = dbc.get_data(typedata = 'get_all_drone', data = data)
         count = len(count)
         if count + 1 > 10:
-            return 'you have reached the maximun capacity for drones'
+            raise falcon.HTTPError(falcon.HTTP_404, title='you have reached the maximun capacity for drones')
+            
         if len(data['serial']) > 100 or data['model'] not in keys_model: #return false is over 100 char
-            error_format = "the format of your data is incorrect"
-            return  error_format
+            raise falcon.HTTPError(falcon.HTTP_404,title="the format of your data is incorrect")
+        
         data['battery'] = 100
         data['state'] = 'IDLE'
         temp = data['model'] #get the model name for the input data
@@ -94,8 +95,9 @@ class Drone(object):
         data['weigth'] = size #set data weigth in the data for registering in db
         res = dbc.insert(typedata = 'insert_drone',data = data) #call to insert the data in db
         if res == None or res == False:
-            raise falcon.HTTPError(falcon.HTTP_404)
-        return res
+            raise falcon.HTTPError(falcon.HTTP_404, title = 'the serial is in used for other drone')
+        temp['result_of_your_query'] = res
+        return temp
 
     @hug.post('/insert_medication',output = hug.output_format.json, input = hug.input_format.json)
     @hug.http(accept=('POST'))
@@ -114,7 +116,7 @@ class Drone(object):
 
         for i in data['code']:#test format in code for medication item
             underscore_code = False
-            number_code = i.isdigit()
+            number_code = i.isdigit() 
             uppercase = i.isupper()
             if i == '_':
                 underscore_code = True
@@ -124,7 +126,8 @@ class Drone(object):
                 raise falcon.HTTPError(falcon.HTTP_404, title = 'bad format in the code of medication') 
 
         res = dbc.insert(typedata = 'insert_medication',data = data) 
-        return res
+        temp['result_of_your_query'] = res
+        return temp
 
     @hug.post('/insert_cargo', output = hug.output_format.json, input = hug.input_format.json)
     @hug.http(accept=('POST'))
