@@ -31,7 +31,7 @@ if __name__== "__main__":
     #response = request.get(url)
 
     #cheking is load or not
-    #url = "http://127.0.0.1:8000/cheking_loading"
+    #url = "http://127.0.0.1:8000/checking_loading"
     #response = request.post(url, json = get_drone)
 
     #insert cargo

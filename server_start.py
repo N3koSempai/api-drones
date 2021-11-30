@@ -58,13 +58,15 @@ class Drone(object):
             raise falcon.HTTPError(falcon.HTTP_404)
         return res
 
-    @hug.post('/cheking_loading',output = hug.output_format.json, input = hug.input_format.json) #cheking if the drone are loaded or not
+    @hug.post('/checking_loading',output = hug.output_format.json, input = hug.input_format.json) #cheking if the drone are loaded or not
     @hug.http(accept=('POST'))
     def cheking_loading(data: hug.types.json):
-        res = dbc.get_data(typedata = 'checking_loading', data =data)
+        res = dbc.get_data(typedata = 'get_drone', data =data)
         if res == None or res == False:
             raise falcon.HTTPError(falcon.HTTP_404)
-        respond['result_of_your_query'] = res[5]
+        respond['result_of_your_query'] = 'True' #show the consulting is correct
+        respond['is loading with'] = res[5] #get only the code of cargo
+        return respond
 
     @hug.post('/checking_battery',output = hug.output_format.json, input = hug.input_format.json) #checking a battery level for a given drone
     @hug.http(accept=('POST'))

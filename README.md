@@ -128,7 +128,7 @@ values field example:
 ```
 
 ### 8 - check is load or not
-url = ```http://127.0.0.1:8000/cheking_loading``` <br/>
+url = ```http://127.0.0.1:8000/checking_loading``` <br/>
 HTTP method: POST <br/>
 key field: ```data```  without quotation marks <br/>
 
