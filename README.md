@@ -16,7 +16,7 @@ python -m unittest
 ## run server
  in the command line use:
 ```batch
-hug -f server_api.py
+hug -f server_start.py
 ```
 
 ## send and receive data from the api server
